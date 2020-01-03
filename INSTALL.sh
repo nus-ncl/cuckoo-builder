@@ -79,47 +79,47 @@ if [ $1 == "all" ] || [ $1 == "ubuntu" ]; then
     cd ~; mkdir cuckoo_ubuntu; cd cuckoo_ubuntu; vagrant init ubuntu/bionic64
     cp ~/.cuckoo/agent/agent.py ~/cuckoo_ubuntu
     cd ~/cuckoo_ubuntu;
-    echo "Vagrant.configure(\"2\") do |config|" > Vagrantfile
-    echo "\tconfig.vm.box = \"ubuntu/bionic64\"" >> Vagrantfile
-    echo "\tconfig.disksize.size = \"20GB\"" >> Vagrantfile
-    echo "\tconfig.vm.network \"forwarded_port\", guest: 80, host:8080" >> Vagrantfile
-    echo "\tconfig.vm.network \"private_network\", ip: \"192.168.101.10\"" >> Vagrantfile
-    echo "\tconfig.vm.provider \"virtualbox\" do |vb|" >> Vagrantfile
-    echo "\t\tvb.name = \"cuckoo_ubuntu\"" >> Vagrantfile
-    echo "\t\tvb.memory = \"2048\"" >> Vagrantfile
-    echo "\tend" >> Vagrantfile
-    echo "\tconfig.vm.provision \"shell\", inline: <<-SHELL" >> Vagrantfile
-    echo "\t\tcp /vagrant/agent.py /home/vagrant/agent.py" >> Vagrantfile
-    echo "\t\tchmod +x /home/vagrant/agent.py" >> Vagrantfile
-    echo "\t\t(crontab -l 2>/dev/null; echo \"@reboot python /home/vagrant/agent.py\") | crontab -" >> Vagrantfile
-    echo "\t\texport DEBIAN_FRONTEND=noninteractive" >> Vagrantfile
-    echo "\t\tapt-get update" >> Vagrantfile
-    echo "\t\tapt-get install -y systemtap gcc patch linux-headers-\$(uname -r) python" >> Vagrantfile
-    echo "\t\tapt-key adv --keyserver keyserver.ubuntu.com --recv-keys C8CAB6595FDFF622" >> Vagrantfile
-    echo "\t\tcodename=\$(lsb_release -cs)" >> Vagrantfile
-    echo "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}          main restricted universe multiverse\" > /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
-    echo "\t\techo \"#deb http://ddebs.ubuntu.com/ \${codename}-security main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
-    echo "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}-updates  main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
-    echo "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}-proposed main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
-    echo "\t\tapt-get update" >> Vagrantfile
-    echo "\t\tapt-get -y install linux-image-\$(uname -r)-dbgsym" >> Vagrantfile
-    echo "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/expand_execve_envp.patch" >> Vagrantfile
-    echo "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/escape_delimiters.patch" >> Vagrantfile
-    echo "\t\tpatch /usr/share/systemtap/tapset/linux/sysc_execve.stp < expand_execve_envp.patch" >> Vagrantfile
-    echo "\t\tpatch /usr/share/systemtap/tapset/uconversions.stp < escape_delimiters.patch" >> Vagrantfile
-    echo "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/strace.stp" >> Vagrantfile
-    echo "\t\tstap -p4 -r \$(uname -r) strace.stp -m stap_ -v" >> Vagrantfile
-    echo "\t\tmkdir /root/.cuckoo" >> Vagrantfile
-    echo "\t\tmv stap_.ko /root/.cuckoo/" >> Vagrantfile
-    echo "\t\tufw disable" >> Vagrantfile
-    echo "\t\ttimedatectl set-ntp off" >> Vagrantfile
-    echo "\t\tapt-get purge update-notifier update-manager update-manager-core ubuntu-release-upgrader-core" >> Vagrantfile
-    echo "\t\tapt-get purge whoopsie ntpdate cups-daemon avahi-autoipd avahi-daemon avahi-utils" >> Vagrantfile
-    echo "\t\tapt-get purge account-plugin-salut libnss-mdns telepathy-salut" >> Vagrantfile
-    echo "\t\tsed -i 's/ChallengeResponseAuthentication.*/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config" >> Vagrantfile
-    echo "\t\treboot" >> Vagrantfile
-    echo "\tSHELL" >> Vagrantfile
-    echo "end" >> Vagrantfile
+    echo -e "Vagrant.configure(\"2\") do |config|" > Vagrantfile
+    echo -e "\tconfig.vm.box = \"ubuntu/bionic64\"" >> Vagrantfile
+    echo -e "\tconfig.disksize.size = \"20GB\"" >> Vagrantfile
+    echo -e "\tconfig.vm.network \"forwarded_port\", guest: 80, host:8080" >> Vagrantfile
+    echo -e "\tconfig.vm.network \"private_network\", ip: \"192.168.101.10\"" >> Vagrantfile
+    echo -e "\tconfig.vm.provider \"virtualbox\" do |vb|" >> Vagrantfile
+    echo -e "\t\tvb.name = \"cuckoo_ubuntu\"" >> Vagrantfile
+    echo -e "\t\tvb.memory = \"2048\"" >> Vagrantfile
+    echo -e "\tend" >> Vagrantfile
+    echo -e "\tconfig.vm.provision \"shell\", inline: <<-SHELL" >> Vagrantfile
+    echo -e "\t\tcp /vagrant/agent.py /home/vagrant/agent.py" >> Vagrantfile
+    echo -e "\t\tchmod +x /home/vagrant/agent.py" >> Vagrantfile
+    echo -e "\t\t(crontab -l 2>/dev/null; echo \"@reboot python /home/vagrant/agent.py\") | crontab -" >> Vagrantfile
+    echo -e "\t\texport DEBIAN_FRONTEND=noninteractive" >> Vagrantfile
+    echo -e "\t\tapt-get update" >> Vagrantfile
+    echo -e "\t\tapt-get install -y systemtap gcc patch linux-headers-\$(uname -r) python" >> Vagrantfile
+    echo -e "\t\tapt-key adv --keyserver keyserver.ubuntu.com --recv-keys C8CAB6595FDFF622" >> Vagrantfile
+    echo -e "\t\tcodename=\$(lsb_release -cs)" >> Vagrantfile
+    echo -e "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}          main restricted universe multiverse\" > /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
+    echo -e "\t\techo \"#deb http://ddebs.ubuntu.com/ \${codename}-security main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
+    echo -e "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}-updates  main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
+    echo -e "\t\techo \"deb http://ddebs.ubuntu.com/ \${codename}-proposed main restricted universe multiverse\" >> /etc/apt/sources.list.d/ddebs.list" >> Vagrantfile
+    echo -e "\t\tapt-get update" >> Vagrantfile
+    echo -e "\t\tapt-get -y install linux-image-\$(uname -r)-dbgsym" >> Vagrantfile
+    echo -e "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/expand_execve_envp.patch" >> Vagrantfile
+    echo -e "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/escape_delimiters.patch" >> Vagrantfile
+    echo -e "\t\tpatch /usr/share/systemtap/tapset/linux/sysc_execve.stp < expand_execve_envp.patch" >> Vagrantfile
+    echo -e "\t\tpatch /usr/share/systemtap/tapset/uconversions.stp < escape_delimiters.patch" >> Vagrantfile
+    echo -e "\t\twget https://raw.githubusercontent.com/cuckoosandbox/cuckoo/master/stuff/systemtap/strace.stp" >> Vagrantfile
+    echo -e "\t\tstap -p4 -r \$(uname -r) strace.stp -m stap_ -v" >> Vagrantfile
+    echo -e "\t\tmkdir /root/.cuckoo" >> Vagrantfile
+    echo -e "\t\tmv stap_.ko /root/.cuckoo/" >> Vagrantfile
+    echo -e "\t\tufw disable" >> Vagrantfile
+    echo -e "\t\ttimedatectl set-ntp off" >> Vagrantfile
+    echo -e "\t\tapt-get purge update-notifier update-manager update-manager-core ubuntu-release-upgrader-core" >> Vagrantfile
+    echo -e "\t\tapt-get purge whoopsie ntpdate cups-daemon avahi-autoipd avahi-daemon avahi-utils" >> Vagrantfile
+    echo -e "\t\tapt-get purge account-plugin-salut libnss-mdns telepathy-salut" >> Vagrantfile
+    echo -e "\t\tsed -i 's/ChallengeResponseAuthentication.*/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config" >> Vagrantfile
+    echo -e "\t\treboot" >> Vagrantfile
+    echo -e "\tSHELL" >> Vagrantfile
+    echo -e "end" >> Vagrantfile
     vagrant up
 fi
 if [ $1 == "all" ] || [ $1 == "windows7" ]; then
@@ -127,35 +127,35 @@ if [ $1 == "all" ] || [ $1 == "windows7" ]; then
     cd ~; mkdir cuckoo_windows7; cd cuckoo_windows7; vagrant init datacastle/windows7
     cp ~/.cuckoo/agent/agent.py ~/cuckoo_windows7
     cd ~/cuckoo_windows7
-    echo "\$pyInstallPath = \"C:\Python27\"" > install-python.ps1
-    echo "if (-not (Test-Path \$pyInstallPath))" >> install-python.ps1
-    echo "{" >> install-python.ps1
-    echo "\t[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12" >> install-python.ps1
-    echo "\tInvoke-WebRequest -OutFile \"C:\\python-2.7.17.msi\" -Uri \"https://npm.taobao.org/mirrors/python/2.7.17/python-2.7.17.msi\"" >> install-python.ps1
-    echo "\tC:\\python-2.7.17.msi /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir=C:\\Python27" >> install-python.ps1
-    echo "\t[Environment]::SetEnvironmentVariable(\"Path\", \$env:Path + \";C:\\Python27;C:\\Python27\\Scripts\", \"Machine\")" >> install-python.ps1
-    echo "}" >> install-python.ps1
-    echo "else" >> install-python.ps1
-    echo "{" >> install-python.ps1
-    echo "\tWrite-Host \"Python 2 has been installed\"" >> install-python.ps1
-    echo "}" >> install-python.ps1
-    echo "Vagrant.configure(\"2\") do |config|" > Vagrantfile
-    echo "\tconfig.vm.box = \"datacastle/windows7\"" >> Vagrantfile
-    echo "\tconfig.vm.network \"private_network\", ip: \"192.168.101.20\"" >> Vagrantfile
-    echo "\tconfig.vm.provider \"virtualbox\" do |vb|" >> Vagrantfile
-    echo "\t\tvb.name = \"cuckoo_windows7\"" >> Vagrantfile
-    echo "\t\tvb.memory = \"2048\"" >> Vagrantfile
-    echo "\tend" >> Vagrantfile
-    echo '\tconfig.vm.provision "file", source: "~/cuckoo_windows7/agent.py", destination: "C:\\\\Users\\\\vagrant\\\\agent.pyw"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", path: "install-python.ps1"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SYSTEM\\\\CurrentControlSet\\\\services\\\\sppsvc\" /v Start /t REG_DWORD /d 4 /f"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v DefaultUserName /t REG_SZ /d vagrant /f"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v DefaultPassword /t REG_SZ /d vagrant /f"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v AutoAdminLogon /t REG_SZ /d 1 /f"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "Start-Sleep -s 30"' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "Start-Process -NoNewWindow -FilePath \"C:\\\\Python27\\\\Scripts\\\\pip.exe\" -ArgumentList \"install\",\"Pillow\""' >> Vagrantfile
-    echo '\tconfig.vm.provision "shell", inline: "schtasks.exe /create /sc ONSTART /tn \"RunCuckooAgent\" /ru \"SYSTEM\" /tr \"C:\\\\Python27\\\\python.exe C:\\\\Users\\\\vagrant\\\\agent.pyw\""' >> Vagrantfile
-    echo "end" >> Vagrantfile
+    echo -e "\$pyInstallPath = \"C:\Python27\"" > install-python.ps1
+    echo -e "if (-not (Test-Path \$pyInstallPath))" >> install-python.ps1
+    echo -e "{" >> install-python.ps1
+    echo -e "\t[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12" >> install-python.ps1
+    echo -e "\tInvoke-WebRequest -OutFile \"C:\\python-2.7.17.msi\" -Uri \"https://npm.taobao.org/mirrors/python/2.7.17/python-2.7.17.msi\"" >> install-python.ps1
+    echo -e "\tC:\\python-2.7.17.msi /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir=C:\\Python27" >> install-python.ps1
+    echo -e "\t[Environment]::SetEnvironmentVariable(\"Path\", \$env:Path + \";C:\\Python27;C:\\Python27\\Scripts\", \"Machine\")" >> install-python.ps1
+    echo -e "}" >> install-python.ps1
+    echo -e "else" >> install-python.ps1
+    echo -e "{" >> install-python.ps1
+    echo -e "\tWrite-Host \"Python 2 has been installed\"" >> install-python.ps1
+    echo -e "}" >> install-python.ps1
+    echo -e "Vagrant.configure(\"2\") do |config|" > Vagrantfile
+    echo -e "\tconfig.vm.box = \"datacastle/windows7\"" >> Vagrantfile
+    echo -e "\tconfig.vm.network \"private_network\", ip: \"192.168.101.20\"" >> Vagrantfile
+    echo -e "\tconfig.vm.provider \"virtualbox\" do |vb|" >> Vagrantfile
+    echo -e "\t\tvb.name = \"cuckoo_windows7\"" >> Vagrantfile
+    echo -e "\t\tvb.memory = \"2048\"" >> Vagrantfile
+    echo -e "\tend" >> Vagrantfile
+    echo -e '\tconfig.vm.provision "file", source: "~/cuckoo_windows7/agent.py", destination: "C:\\\\Users\\\\vagrant\\\\agent.pyw"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", path: "install-python.ps1"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SYSTEM\\\\CurrentControlSet\\\\services\\\\sppsvc\" /v Start /t REG_DWORD /d 4 /f"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v DefaultUserName /t REG_SZ /d vagrant /f"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v DefaultPassword /t REG_SZ /d vagrant /f"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "REG add \"HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" /v AutoAdminLogon /t REG_SZ /d 1 /f"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "Start-Sleep -s 30"' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "Start-Process -NoNewWindow -FilePath \"C:\\\\Python27\\\\Scripts\\\\pip.exe\" -ArgumentList \"install\",\"Pillow\""' >> Vagrantfile
+    echo -e '\tconfig.vm.provision "shell", inline: "schtasks.exe /create /sc ONSTART /tn \"RunCuckooAgent\" /ru \"SYSTEM\" /tr \"C:\\\\Python27\\\\python.exe C:\\\\Users\\\\vagrant\\\\agent.pyw\""' >> Vagrantfile
+    echo -e "end" >> Vagrantfile
     vagrant up
 fi
 
