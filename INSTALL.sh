@@ -50,6 +50,7 @@ pip install -U pip setuptools
 pip install -U m2crypto
 pip install -U psycopg2
 pip install -U cuckoo
+pip install -U supervisor
 cuckoo -d
 cuckoo community
 deactivate
@@ -169,7 +170,7 @@ if [ $1 == "all" ] || [ $1 == "ubuntu" ]; then
     sleep 70
     vboxmanage snapshot cuckoo_ubuntu take cuckoo_snapshot --pause
     vboxmanage controlvm cuckoo_ubuntu poweroff
-    svboxmanage snapshot cuckoo_ubuntu restorecurrent
+    vboxmanage snapshot cuckoo_ubuntu restorecurrent
 fi
 if [ $1 == "all" ] || [ $1 == "windows7" ]; then
     cd ~/cuckoo_windows7

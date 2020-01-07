@@ -37,29 +37,36 @@ user@node:~$ sudo ./INSTALL.sh <all|ubuntu|windows7>
 ### Starting Cuckoo Controller
 It is recommended to use Cuckoo in a virtual environment to prevent version conflicts as Cuckoo does not use the latest versions of some packages that it depends on. Both a global and a virtual environment installation are provided on the sample VM.
 
-To start Cuckoo in a virtual environment, start the sample virtual environment /users/user/venv. Other Cuckoo instances can be run by pointing the $CWD to the location of the respective instances.
+To start Cuckoo in a virtual environment, start the sample virtual environment $HOME/cuckoo_env. Other Cuckoo instances can be run by pointing the $CWD to the location of the respective instances.
 
 ```$xslt
-user@node:~$ cd /users/<user>
-user@node:~$ . venv/bin/activate
+user@node:~$ cd ~
+user@node:~$ . cuckoo_env/bin/activate
 (cuckoo_env) user@node:~$ cuckoo --cwd ~/.cuckoo
 ```
 
 It is recommended to run Cuckoo in the background using supervisor:
 
 ```$xslt
-user@node:~$ cd /users/<user>
-user@node:~$ . venv/bin/activate
-(cuckoo_env) user@node:~$ cd /users/<user>/.cuckoo
-(cuckoo_env) user@node:~$ sudo /users/<user>/cuckoo_env/bin/supervisord -c supervisord.conf
+user@node:~$ cd ~
+user@node:~$ . cuckoo_env/bin/activate
+(cuckoo_env) user@node:~$ cd .cuckoo
+(cuckoo_env) user@node:~$ sudo ~/cuckoo_env/bin/supervisorctl start all -c supervisord.conf
 ```
+
+Check the status using supervisor control:
+
+```$xslt
+(cuckoo_env) user@node:~$ ~/cuckoo_env/bin/supervisorctl status
+```
+
 
 ### Starting Cuckoo Web Interface
 Cuckoo provides a graphical web interface that is more intuitive to use. This can be started with:
 
 ```$xslt
-user@node:~$ cd /users/<user>
-user@node:~$ . venv/bin/activate
+user@node:~$ cd ~
+user@node:~$ . cuckoo_env/bin/activate
 (cuckoo_env) user@node:~$ cuckoo web runserver 0.0.0.0:<PORT>
 ```
 
@@ -73,10 +80,10 @@ A running Cuckoo instance can be terminated by simply issuing a CTRL-C command.
 If using supervisord, Cuckoo can be stopped by:
 
 ```$xslt
-user@node:~$ cd /users/<user>
-user@node:~$ . venv/bin/activate
-(venv) user@node:~$ cd /users/<user>/.cuckoo
-(venv) user@node:~$ sudo /users/<user>/cuckoo_env/bin/supervisord stop
+user@node:~$ cd ~
+user@node:~$ . cuckoo_env/bin/activate
+(cuckoo_env) user@node:~$ cd .cuckoo
+(cuckoo_env) user@node:~$ sudo ~/cuckoo_env/bin/supervisorctl stop all
 cuckoo:
 ```
 
@@ -85,7 +92,7 @@ cuckoo:
 To clear all the previous analysis results and binaries, run the following:
 
 ```$xslt
-user@node:~$ cd /users/<user>
-user@node:~$ . venv/bin/activate
-(venv) user@node:~$ cuckoo clear
+user@node:~$ cd ~
+user@node:~$ . cuckoo_env/bin/activate
+(cuckoo_env) user@node:~$ cuckoo clear
 ```
